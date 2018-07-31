@@ -1,0 +1,40 @@
+{
+  "name": "probot-hello",
+  "version": "1.0.0",
+  "description": "A Probot app",
+  "author": "Edward Raigosa <wenlock@github.com>",
+  "license": "ISC",
+  "repository": "https://github.com/wenlock/probot-hello.git",
+  "homepage": "https://github.com/wenlock/probot-hello",
+  "bugs": "https://github.com/wenlock/probot-hello/issues",
+  "keywords": [
+    "probot",
+    "github",
+    "probot-app"
+  ],
+  "scripts": {
+    "dev": "nodemon --exec \"npm start\"",
+    "start": "probot run ./index.js",
+    "lint": "standard --fix",
+    "test": "jest && standard",
+    "test:watch": "jest --watch --notify --notifyMode=change --coverage"
+  },
+  "dependencies": {
+    "probot": "^7.0.0"
+  },
+  "devDependencies": {
+    "jsdom": "11.11.0",
+    "jest": "^23.4.2",
+    "nodemon": "^1.17.2",
+    "smee-client": "^1.0.2",
+    "standard": "^10.0.3"
+  },
+  "engines": {
+    "node": ">= 8.3.0"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
+  }
+}
