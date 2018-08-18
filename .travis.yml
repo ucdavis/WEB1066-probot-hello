@@ -5,4 +5,4 @@ before_install:
   - sudo apt-get update && sudo apt-get install -y python-yaml
 
 script:
-  - python -c "from yaml import load, dump"
+  - python2.7 -c "from yaml import load, dump"
