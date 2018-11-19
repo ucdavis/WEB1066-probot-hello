@@ -11,9 +11,28 @@ module.exports = app => {
     return context.github.issues.createComment(issueComment)
   })
 
+  app.on('check_suite.requested', async context => {
+    app.log('check_suite.requested -> ' + context)
+  })
+
+  app.on('check_suite.completed', async context => {
+    app.log('check_suite.completed -> ' + context)
+  })
   // For more information on building apps:
   // https://probot.github.io/docs/
 
   // To get your app running against GitHub, see:
   // https://probot.github.io/docs/development/
+
+  // Get an express router to expose new HTTP endpoints
+  const router = app.route('/metrics')
+
+  // Use any middleware
+  router.use(require('express').static('public'))
+
+  // Add a new route
+  router.get('/metrics', (req, res) => {
+    app.log('GET -> metrics called.')
+    res.send('Metrics would go here')
+  })
 }
