@@ -3,6 +3,32 @@
  * @param {import('probot').Application} app - Probot's Application class.
  */
 module.exports = app => {
+  // Get an express router to expose new HTTP endpoints
+  const router = app.route('/probot')
+
+  // prometheus metrics
+  const client = require('prom-client');
+  const Registry = client.Registry;
+  const register = new Registry();
+  const collectDefaultMetrics = client.collectDefaultMetrics;
+
+
+  // Use any middleware
+  // router.use(require('express').static('public'))
+  // router.use(require('express').static(__dirname + '/public'));
+  // Probe every 5th second.
+
+  collectDefaultMetrics({register, timeout: 5000 });
+
+
+  // Add a new route
+  router.get('/metrics', (req, res) => {
+    app.log('GET -> metrics called.')
+    res.set('Content-Type', register.contentType);
+    res.end(register.metrics());
+    // res.send('Metrics would go here')
+  })
+
   // Your code here
   app.log('Yay, the app was loaded!')
 
@@ -23,16 +49,4 @@ module.exports = app => {
 
   // To get your app running against GitHub, see:
   // https://probot.github.io/docs/development/
-
-  // Get an express router to expose new HTTP endpoints
-  const router = app.route('/metrics')
-
-  // Use any middleware
-  router.use(require('express').static('public'))
-
-  // Add a new route
-  router.get('/metrics', (req, res) => {
-    app.log('GET -> metrics called.')
-    res.send('Metrics would go here')
-  })
 }
