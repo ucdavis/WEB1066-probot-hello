@@ -18,8 +18,26 @@ module.exports = app => {
   // router.use(require('express').static(__dirname + '/public'));
   // Probe every 5th second.
 
-  collectDefaultMetrics({register, timeout: 5000 });
+  collectDefaultMetrics({register,
+    timeout: 5000,
+    prefix: 'default_'
+  });
 
+  // register metrics on startup
+  const counter = new client.Counter({
+    name: 'builds',
+    help: 'The number of builds that have executed',
+    labelNames: ['build_name', 'result'],
+    registers: [register]
+  });
+
+  // Lets test incrementing the build count
+  router.get('/test_count', (req, res) => {
+    app.log('GET -> /test_count.')
+    counter.inc({build_name:'mybuildproject',result:1}, 1, new Date());
+    counter.inc({build_name:'mybuildproject2',result:0}, 1, new Date());
+    res.send('Counter incremented ' + new Date());
+  })
 
   // Add a new route
   router.get('/metrics', (req, res) => {
