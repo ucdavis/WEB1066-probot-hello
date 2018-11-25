@@ -3,4 +3,4 @@ scrape_configs:
     metrics_path: /probot/metrics
     static_configs:
       - targets:
-        - '192.168.1.224:3000'
+        - 'leopoppy-probot.herokuapp.com'
