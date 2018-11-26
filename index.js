@@ -112,6 +112,10 @@ module.exports = app => {
   })
 
   app.on('check_suite.completed', async context => {
+    app.log('check_suite.completed')
+    app.log(context)
+    app.log(context['check_run'])
+    app.log(context['action'])
     app.log('check_suite.completed -> ' + objToString(context))
     histogram.observe({
         action:                 context.action, // .action
@@ -129,6 +133,7 @@ module.exports = app => {
       },
       new Date(context.check_run.completed_at) - new Date(context.check_run.started_at) // micro seconds
     );
+    app.log('check_suite.completed - done')
   })
   // For more information on building apps:
   // https://probot.github.io/docs/
