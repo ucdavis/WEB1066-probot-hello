@@ -6,6 +6,7 @@ module.exports = app => {
   // Get an express router to expose new HTTP endpoints
   const router = app.route('/probot')
 
+  // https://github.com/siimon/prom-client
   // prometheus metrics
   const client = require('prom-client');
   const Registry = client.Registry;
@@ -24,7 +25,7 @@ module.exports = app => {
   });
 
   // register metrics on startup
-  const counter = new client.Counter({
+  const histogram = new client.Histogram({
     name: 'builds',
     help: 'The number of builds that have executed',
     labelNames: ['build_name', 'result'],
@@ -34,8 +35,8 @@ module.exports = app => {
   // Lets test incrementing the build count
   router.get('/test_count', (req, res) => {
     app.log('GET -> /test_count.')
-    counter.inc({build_name:'mybuildproject',result:1}, 1, new Date());
-    counter.inc({build_name:'mybuildproject2',result:0}, 1, new Date());
+    histogram.observe({build_name:'mybuildproject',result:1}, 1);
+    histogram.observe({build_name:'mybuildproject2',result:0}, 1);
     res.send('Counter incremented ' + new Date());
   })
 
