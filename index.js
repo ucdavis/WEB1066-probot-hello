@@ -114,8 +114,10 @@ module.exports = app => {
   app.on('check_suite.completed', async context => {
     app.log('check_suite.completed')
     app.log(context)
-    app.log(context['check_run'])
-    app.log(context['action'])
+    app.log('before context.payload')
+    app.log(context.payload)
+    app.log('after context.payload')
+    app.log(context.payload.check_suite)
     app.log('check_suite.completed -> ' + objToString(context))
     histogram.observe({
         action:                 context.action, // .action
