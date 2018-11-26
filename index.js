@@ -114,6 +114,9 @@ module.exports = app => {
   app.on('check_suite.completed', async context => {
     app.log('check_suite.completed -> called ')
     app.log(context.payload.action)
+    app.log('before payload.check_suite')
+    app.log(context.payload.check_suite)
+    app.log('after check_suite')
     app.log(context.payload.check_suite.name)
     app.log(context.payload.check_suite.id)
     app.log(context.payload.check_suite.external_id)
@@ -122,6 +125,7 @@ module.exports = app => {
     app.log(context.payload.check_suite.conclusion)
     app.log(context.payload.check_suite.started_at)
     app.log(context.payload.check_suite.completed_at)
+    app.log('after payload.check_suite')
     app.log(context.payload.sender.login)
     app.log(context.payload.repository.full_name)
     app.log(context.payload.repository.name)
