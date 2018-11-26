@@ -113,6 +113,18 @@ module.exports = app => {
 
   app.on('check_suite.completed', async context => {
     app.log('check_suite.completed -> called ')
+    app.log(context.payload.action)
+    app.log(context.payload.check_suite.name)
+    app.log(context.payload.check_suite.id)
+    app.log(context.payload.check_suite.external_id)
+    app.log(context.payload.check_suite.details_url)
+    app.log(context.payload.check_suite.status)
+    app.log(context.payload.check_suite.conclusion)
+    app.log(context.payload.check_suite.started_at)
+    app.log(context.payload.check_suite.completed_at)
+    app.log(context.payload.sender.login)
+    app.log(context.payload.repository.full_name)
+    app.log(context.payload.repository.name)
     histogram.observe({
         action:                   context.payload.action, // .action
         check_suite_name:         context.payload.check_suite.name, // check_suite.name
