@@ -84,11 +84,11 @@ module.exports = app => {
   })
 
   app.on('check_suite.requested', async context => {
-    app.log('check_suite.requested -> ' + context)
+    app.log('check_suite.requested -> %o ', context)
   })
 
   app.on('check_suite.completed', async context => {
-    app.log('check_suite.completed -> ' + context)
+    app.log('check_suite.completed -> %o ', context)
     histogram.observe({
         action:                 context.action, // .action
         check_run_name:         context.check_run.name, // check_run.name
