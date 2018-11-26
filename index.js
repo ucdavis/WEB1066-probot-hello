@@ -54,14 +54,15 @@ module.exports = app => {
     help: 'The number of builds that have executed',
     labelNames: [
                  'action',  // action
-                 'check_suite_name',
+                 'check_suite_head_branch',
+                 'check_suite_head_sha',
                  'check_suite_id',
-                 'check_suite_external_id', // the travis build id
-                 'check_suite_details_url',
+                 // 'check_suite_external_id', // the travis build id
+                 // 'check_suite_details_url',
                  'check_suite_status',
                  'check_suite_conclusion',
-                 'check_suite_started_at',
-                 'check_suite_completed_at',
+                 'check_suite_created_at',
+                 'check_suite_updated_at',
                  'sender_login',
                  'repository_full_name',
                  'repository_name'
@@ -74,14 +75,15 @@ module.exports = app => {
     app.log('GET -> /test_count.')
     histogram.observe({
         action:                   'completed', // .action
-        check_suite_name:         'Travis CI - Pull Request', // check_run.name
+        check_suite_head_branch:  'mybranch',
+        check_suite_head_sha:     'xxxxxx', // check_run.name
         check_suite_id:           34719534,
-        check_suite_external_id:  92495945,
-        check_suite_details_url:  'https://api.github.com/repos/LeoPoppy/WEB1066-probot-hello/check-runs/34719534',
+        // check_suite_external_id:  92495945,
+        // check_suite_details_url:  'https://api.github.com/repos/LeoPoppy/WEB1066-probot-hello/check-runs/34719534',
         check_suite_status:       'completed',
         check_suite_conclusion:   'success',
-        check_suite_started_at:   '2018-11-26T04:54:18Z',
-        check_suite_completed_at: '2018-11-26T04:56:08Z',
+        check_suite_created_at:   '2018-11-26T04:54:18Z',
+        check_suite_updated_at:   '2018-11-26T04:56:08Z',
         sender_login:             'wenlock', // sender.login
         repository_full_name:     'LeoPoppy/WEB1066-probot-hello', // repository.full_name
         repository_name:          'WEB1066-probot-hello'
@@ -113,40 +115,39 @@ module.exports = app => {
 
   app.on('check_suite.completed', async context => {
     app.log('check_suite.completed -> called ')
-    app.log('dump context')
-    app.log(context)
-    app.log('after context')
-    app.log(context.payload.action)
-    app.log('before payload.check_suite')
-    app.log(context.payload.check_suite)
-    app.log('after check_suite')
-    app.log(context.payload.check_suite.name)
+    app.log('dump payload')
+    app.log(context.payload)
+    app.log('after payload')
+
+    app.log(context.payload.check_suite.head_branch)
+    app.log(context.payload.check_suite.head_sha)
     app.log(context.payload.check_suite.id)
-    app.log(context.payload.check_suite.external_id)
-    app.log(context.payload.check_suite.details_url)
+    // app.log(context.payload.check_suite.external_id)
+    // app.log(context.payload.check_suite.details_url)
     app.log(context.payload.check_suite.status)
     app.log(context.payload.check_suite.conclusion)
-    app.log(context.payload.check_suite.started_at)
-    app.log(context.payload.check_suite.completed_at)
+    app.log(context.payload.check_suite.created_at)
+    app.log(context.payload.check_suite.updated_at)
     app.log('after payload.check_suite')
     app.log(context.payload.sender.login)
     app.log(context.payload.repository.full_name)
     app.log(context.payload.repository.name)
     histogram.observe({
         action:                   context.payload.action, // .action
-        check_suite_name:         context.payload.check_suite.name, // check_suite.name
+        check_suite_head_branch:  context.payload.check_suite.head_branch,
+        check_suite_head_sha:     context.payload.check_suite.head_sha,
         check_suite_id:           context.payload.check_suite.id,
-        check_suite_external_id:  context.payload.check_suite.external_id,
-        check_suite_details_url:  context.payload.check_suite.details_url,
+        // check_suite_external_id:  context.payload.check_suite.external_id,
+        // check_suite_details_url:  context.payload.check_suite.details_url,
         check_suite_status:       context.payload.check_suite.status,
         check_suite_conclusion:   context.payload.check_suite.conclusion,
-        check_suite_started_at:   context.payload.check_suite.started_at,
-        check_suite_completed_at: context.payload.check_suite.completed_at,
+        check_suite_created_at:   context.payload.check_suite.created_at,
+        check_suite_updated_at:   context.payload.check_suite.updated_at,
         sender_login:             context.payload.sender.login, // sender.login
         repository_full_name:     context.payload.repository.full_name, // repository.full_name
         repository_name:          context.payload.repository.name
       },
-      new Date(context.payload.check_suite.completed_at) - new Date(context.payload.check_suite.started_at) // micro seconds
+      new Date(context.payload.check_suite.updated_at) - new Date(context.payload.check_suite.created_at) // micro seconds
     );
     app.log('check_suite.completed -> done')
   })
