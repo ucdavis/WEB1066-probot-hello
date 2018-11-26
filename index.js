@@ -2,6 +2,30 @@
  * This is the entry point for your Probot App.
  * @param {import('probot').Application} app - Probot's Application class.
  */
+ function objToString(arr,level) {
+     var dumped_text = "";
+     if(!level) level = 0;
+
+     var level_padding = "";
+     for(var j=0;j<level+1;j++) level_padding += "    ";
+
+     if(typeof(arr) == 'object') {
+         for(var item in arr) {
+             var value = arr[item];
+
+             if(typeof(value) == 'object') {
+                 dumped_text += level_padding + "'" + item + "' ...\n";
+             //     dumped_text += objToString(value,level+1);
+             } else {
+                 dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
+             }
+         }
+     } else {
+         dumped_text = "===>"+arr+"<===("+typeof(arr)+")";
+     }
+     return dumped_text;
+}
+
 module.exports = app => {
   // Get an express router to expose new HTTP endpoints
   const router = app.route('/probot')
@@ -84,11 +108,11 @@ module.exports = app => {
   })
 
   app.on('check_suite.requested', async context => {
-    app.log('check_suite.requested -> %o ', context)
+    app.log('check_suite.requested -> ' + context)
   })
 
   app.on('check_suite.completed', async context => {
-    app.log('check_suite.completed -> %o ', context)
+    app.log('check_suite.completed -> ' + objToString(context))
     histogram.observe({
         action:                 context.action, // .action
         check_run_name:         context.check_run.name, // check_run.name
