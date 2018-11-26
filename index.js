@@ -28,15 +28,42 @@ module.exports = app => {
   const histogram = new client.Histogram({
     name: 'builds',
     help: 'The number of builds that have executed',
-    labelNames: ['build_name', 'result'],
+    labelNames: [
+                 'action',  // action
+                 'check_run_name',
+                 'check_run_id',
+                 'check_run_external_id', // the travis build id
+                 'check_run_details_url',
+                 'check_run_status',
+                 'check_run_conclusion',
+                 'check_run_started_at',
+                 'check_run_completed_at',
+                 'sender_login',
+                 'repository_full_name',
+                 'repository_name'
+               ],
     registers: [register]
   });
 
   // Lets test incrementing the build count
   router.get('/test_count', (req, res) => {
     app.log('GET -> /test_count.')
-    histogram.observe({build_name:'mybuildproject',result:1}, 1);
-    histogram.observe({build_name:'mybuildproject2',result:0}, 1);
+    histogram.observe({
+        action:                 'completed', // .action
+        check_run_name:         'Travis CI - Pull Request', // check_run.name
+        check_run_id:           34719534,
+        check_run_external_id:  92495945,
+        check_run_details_url:  'https://api.github.com/repos/LeoPoppy/WEB1066-probot-hello/check-runs/34719534',
+        check_run_status:       'completed',
+        check_run_conclusion:   'success',
+        check_run_started_at:   '2018-11-26T04:54:18Z',
+        check_run_completed_at: '2018-11-26T04:56:08Z',
+        sender_login:           'wenlock', // sender.login
+        repository_full_name:   'LeoPoppy/WEB1066-probot-hello', // repository.full_name
+        repository_name:        'WEB1066-probot-hello'
+      },
+      new Date('2018-11-26T04:56:08Z') - new Date('2018-11-26T04:54:18Z') // micro seconds
+    );
     res.send('Counter incremented ' + new Date());
   })
 
@@ -62,6 +89,22 @@ module.exports = app => {
 
   app.on('check_suite.completed', async context => {
     app.log('check_suite.completed -> ' + context)
+    histogram.observe({
+        action:                 context.action, // .action
+        check_run_name:         context.check_run.name, // check_run.name
+        check_run_id:           context.check_run.id,
+        check_run_external_id:  context.check_run.external_id,
+        check_run_details_url:  context.check_run.details_url,
+        check_run_status:       context.check_run.status,
+        check_run_conclusion:   context.check_run.conclusion,
+        check_run_started_at:   context.check_run.started_at,
+        check_run_completed_at: context.check_run.completed_at,
+        sender_login:           context.sender.login, // sender.login
+        repository_full_name:   context.repository.full_name, // repository.full_name
+        repository_name:        context.repository.name
+      },
+      new Date(context.check_run.completed_at) - new Date(context.check_run.started_at) // micro seconds
+    );
   })
   // For more information on building apps:
   // https://probot.github.io/docs/
