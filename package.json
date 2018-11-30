@@ -1,6 +1,6 @@
 {
   "name": "probot-hello",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Probot app",
   "author": "Edward Raigosa <wenlock@github.com>",
   "license": "ISC",
