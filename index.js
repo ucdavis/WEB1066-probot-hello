@@ -114,6 +114,7 @@ module.exports = app => {
   })
 
   app.on('check_suite.completed', async context => {
+    
     app.log('check_suite.completed -> called ')
     app.log('dump payload')
     app.log(context.payload)
