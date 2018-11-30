@@ -117,40 +117,40 @@ module.exports = app => {
 
     app.log('check_suite.completed -> called ');
     app.log('dump payload');
-    app.log(context.payload);
-    app.log('after payload');
-
-    app.log(context.payload.check_suite.head_branch);
-    app.log(context.payload.check_suite.head_sha);
-    app.log(context.payload.check_suite.id);
-    // app.log(context.payload.check_suite.external_id)
-    // app.log(context.payload.check_suite.details_url)
-    app.log(context.payload.check_suite.status);
-    app.log(context.payload.check_suite.conclusion);
-    app.log(context.payload.check_suite.created_at);
-    app.log(context.payload.check_suite.updated_at);
-    app.log('after payload.check_suite');
-    app.log(context.payload.sender.login);
-    app.log(context.payload.repository.full_name);
-    app.log(context.payload.repository.name);
-    histogram.observe({
-        action:                   context.payload.action, // .action
-        check_suite_head_branch:  context.payload.check_suite.head_branch,
-        check_suite_head_sha:     context.payload.check_suite.head_sha,
-        check_suite_id:           context.payload.check_suite.id,
-        // check_suite_external_id:  context.payload.check_suite.external_id,
-        // check_suite_details_url:  context.payload.check_suite.details_url,
-        check_suite_status:       context.payload.check_suite.status,
-        check_suite_conclusion:   context.payload.check_suite.conclusion,
-        check_suite_created_at:   context.payload.check_suite.created_at,
-        check_suite_updated_at:   context.payload.check_suite.updated_at,
-        sender_login:             context.payload.sender.login, // sender.login
-        repository_full_name:     context.payload.repository.full_name, // repository.full_name
-        repository_name:          context.payload.repository.name
-      },
-      new Date(context.payload.check_suite.updated_at) - new Date(context.payload.check_suite.created_at) // micro seconds
-    );
-    app.log('check_suite.completed -> done')
+    // app.log(context.payload);
+    // app.log('after payload');
+    //
+    // app.log(context.payload.check_suite.head_branch);
+    // app.log(context.payload.check_suite.head_sha);
+    // app.log(context.payload.check_suite.id);
+    // // app.log(context.payload.check_suite.external_id)
+    // // app.log(context.payload.check_suite.details_url)
+    // app.log(context.payload.check_suite.status);
+    // app.log(context.payload.check_suite.conclusion);
+    // app.log(context.payload.check_suite.created_at);
+    // app.log(context.payload.check_suite.updated_at);
+    // app.log('after payload.check_suite');
+    // app.log(context.payload.sender.login);
+    // app.log(context.payload.repository.full_name);
+    // app.log(context.payload.repository.name);
+    // histogram.observe({
+    //     action:                   context.payload.action, // .action
+    //     check_suite_head_branch:  context.payload.check_suite.head_branch,
+    //     check_suite_head_sha:     context.payload.check_suite.head_sha,
+    //     check_suite_id:           context.payload.check_suite.id,
+    //     // check_suite_external_id:  context.payload.check_suite.external_id,
+    //     // check_suite_details_url:  context.payload.check_suite.details_url,
+    //     check_suite_status:       context.payload.check_suite.status,
+    //     check_suite_conclusion:   context.payload.check_suite.conclusion,
+    //     check_suite_created_at:   context.payload.check_suite.created_at,
+    //     check_suite_updated_at:   context.payload.check_suite.updated_at,
+    //     sender_login:             context.payload.sender.login, // sender.login
+    //     repository_full_name:     context.payload.repository.full_name, // repository.full_name
+    //     repository_name:          context.payload.repository.name
+    //   },
+    //   new Date(context.payload.check_suite.updated_at) - new Date(context.payload.check_suite.created_at) // micro seconds
+    // );
+    // app.log('check_suite.completed -> done');
   });
   // For more information on building apps:
   // https://probot.github.io/docs/
