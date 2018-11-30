@@ -28,7 +28,7 @@
 
 module.exports = app => {
   // Get an express router to expose new HTTP endpoints
-  const router = app.route('/probot')
+  const router = app.route('/probot');
 
   // https://github.com/siimon/prom-client
   // prometheus metrics
@@ -72,7 +72,7 @@ module.exports = app => {
 
   // Lets test incrementing the build count
   router.get('/test_count', (req, res) => {
-    app.log('GET -> /test_count.')
+    app.log('GET -> /test_count.');
     histogram.observe({
         action:                   'completed', // .action
         check_suite_head_branch:  'mybranch',
@@ -91,48 +91,48 @@ module.exports = app => {
       new Date('2018-11-26T04:56:08Z') - new Date('2018-11-26T04:54:18Z') // micro seconds
     );
     res.send('Counter incremented ' + new Date());
-  })
+  });
 
   // Add a new route
   router.get('/metrics', (req, res) => {
-    app.log('GET -> metrics called.')
+    app.log('GET -> metrics called.');
     res.set('Content-Type', register.contentType);
     res.end(register.metrics());
     // res.send('Metrics would go here')
-  })
+  });
 
   // Your code here
-  app.log('Yay, the app was loaded!')
+  app.log('Yay, the app was loaded!');
 
   app.on('issues.opened', async context => {
-    const issueComment = context.issue({ body: 'Thanks for opening this issue! It worked.' })
-    return context.github.issues.createComment(issueComment)
-  })
+    const issueComment = context.issue({ body: 'Thanks for opening this issue! It worked.' });
+    return context.github.issues.createComment(issueComment);
+  });
 
   app.on('check_suite.requested', async context => {
-    app.log('check_suite.requested -> ' + context)
-  })
+    app.log('check_suite.requested -> ' + context);
+  });
 
   app.on('check_suite.completed', async context => {
-    
-    app.log('check_suite.completed -> called ')
-    app.log('dump payload')
-    app.log(context.payload)
-    app.log('after payload')
 
-    app.log(context.payload.check_suite.head_branch)
-    app.log(context.payload.check_suite.head_sha)
-    app.log(context.payload.check_suite.id)
+    app.log('check_suite.completed -> called ');
+    app.log('dump payload');
+    app.log(context.payload);
+    app.log('after payload');
+
+    app.log(context.payload.check_suite.head_branch);
+    app.log(context.payload.check_suite.head_sha);
+    app.log(context.payload.check_suite.id);
     // app.log(context.payload.check_suite.external_id)
     // app.log(context.payload.check_suite.details_url)
-    app.log(context.payload.check_suite.status)
-    app.log(context.payload.check_suite.conclusion)
-    app.log(context.payload.check_suite.created_at)
-    app.log(context.payload.check_suite.updated_at)
-    app.log('after payload.check_suite')
-    app.log(context.payload.sender.login)
-    app.log(context.payload.repository.full_name)
-    app.log(context.payload.repository.name)
+    app.log(context.payload.check_suite.status);
+    app.log(context.payload.check_suite.conclusion);
+    app.log(context.payload.check_suite.created_at);
+    app.log(context.payload.check_suite.updated_at);
+    app.log('after payload.check_suite');
+    app.log(context.payload.sender.login);
+    app.log(context.payload.repository.full_name);
+    app.log(context.payload.repository.name);
     histogram.observe({
         action:                   context.payload.action, // .action
         check_suite_head_branch:  context.payload.check_suite.head_branch,
@@ -151,7 +151,7 @@ module.exports = app => {
       new Date(context.payload.check_suite.updated_at) - new Date(context.payload.check_suite.created_at) // micro seconds
     );
     app.log('check_suite.completed -> done')
-  })
+  });
   // For more information on building apps:
   // https://probot.github.io/docs/
 
