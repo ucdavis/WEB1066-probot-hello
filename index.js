@@ -97,7 +97,7 @@ module.exports = app => {
     app.log('GET -> metrics called.')
     res.set('Content-Type', register.contentType)
     res.end(register.metrics())
-    res.send('Metrics would go here')
+    // res.send('Metrics would go here')
   })
 
   // Your code here
