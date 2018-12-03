@@ -4,7 +4,7 @@ const myProbotApp = require('..')
 
 const issuesOpenedPayload = require('./fixtures/issues.opened.json')
 const checkSuiteRequestedPayload = require('./fixtures/check_suite.requested.json')
-const checkSuiteCompletedPayload = require('./fixtures/check_suite.completed.json')
+const checkRunCompletedPayload = require('./fixtures/check_run.completed.json')
 
 test('that we can run tests', () => {
   // your real tests go here
@@ -52,11 +52,11 @@ describe('My Probot app', () => {
     // expect(result).toBe(true)
   })
 
-  test('process check_suite completed event', async () => {
+  test('process check_run completed event', async () => {
     // Simulates delivery of an issues.opened webhook
     await app.receive({
-      name: 'check_suite.completed',
-      payload: checkSuiteCompletedPayload
+      name: 'check_run.completed',
+      payload: checkRunCompletedPayload
     })
 
     // expect(result.action).toEqual('completed')
