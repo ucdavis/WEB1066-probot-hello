@@ -3,7 +3,7 @@ const { Application } = require('probot')
 const myProbotApp = require('..')
 
 const issuesOpenedPayload = require('./fixtures/issues.opened.json')
-const checkSuiteRequestedPayload = require('./fixtures/check_suite.requested.json')
+const checkRunRequestedPayload = require('./fixtures/check_run.created.json')
 const checkRunCompletedPayload = require('./fixtures/check_run.completed.json')
 
 test('that we can run tests', () => {
@@ -37,19 +37,14 @@ describe('My Probot app', () => {
 
     // This test passes if the code in your index.js file calls `context.github.issues.createComment`
     expect(github.issues.createComment).toHaveBeenCalled()
-    app.log(app)
-    app.log('done with issue test')
   })
 
-  test('process check_suite requested event', async () => {
+  test('process check_run requested event', async () => {
     // Simulates delivery of a check_suite.requested webhook
     await app.receive({
-      name: 'check_suite.requested',
-      payload: checkSuiteRequestedPayload
+      name: 'check_run.created',
+      payload: checkRunRequestedPayload
     })
-
-    // expect(res.action).toEqual('created')
-    // expect(result).toBe(true)
   })
 
   test('process check_run completed event', async () => {
@@ -58,8 +53,6 @@ describe('My Probot app', () => {
       name: 'check_run.completed',
       payload: checkRunCompletedPayload
     })
-
-    // expect(result.action).toEqual('completed')
   })
 })
 
