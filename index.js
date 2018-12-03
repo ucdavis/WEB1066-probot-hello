@@ -111,14 +111,16 @@ module.exports = app => {
   app.on('check_suite.requested', async context => {
     app.log('check_suite.requested ')
     app.log(JSON.stringify(context))
-    return context
+    return true
   })
 
   app.on('check_suite.completed', async context => {
     app.log('check_suite.completed -> called ')
     app.log('dump payload')
-    app.log(JSON.stringify(context))
-    return context
+    // app.log(JSON.stringify(context))
+    app.log(JSON.stringify(context.payload.action))
+    console.log('done')
+    // return context.payload
     // app.log(context.payload)
     // app.log('after payload')
     //

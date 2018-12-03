@@ -37,6 +37,8 @@ describe('My Probot app', () => {
 
     // This test passes if the code in your index.js file calls `context.github.issues.createComment`
     expect(github.issues.createComment).toHaveBeenCalled()
+    app.log(app)
+    app.log('done with issue test')
   })
 
   test('process check_suite requested event', async () => {
@@ -47,6 +49,7 @@ describe('My Probot app', () => {
     })
 
     // expect(res.action).toEqual('created')
+    // expect(result).toBe(true)
   })
 
   test('process check_suite completed event', async () => {
@@ -56,7 +59,7 @@ describe('My Probot app', () => {
       payload: checkSuiteCompletedPayload
     })
 
-    // expect(res.action).toEqual('completed')
+    // expect(result.action).toEqual('completed')
   })
 })
 
