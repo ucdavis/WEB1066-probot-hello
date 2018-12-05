@@ -25,9 +25,11 @@ module.exports = app => {
   })
 
   // register metrics on startup
-  const histogram = new client.Histogram({
+  const summary = new client.Summary({
     name: 'builds',
     help: 'The number of builds that have executed',
+    maxAgeSeconds: 3600, // don't observe a build longer than 1 hr
+    ageBuckets: 2, // just 2 observations
     labelNames: [
       'action',  // action
       'name',
@@ -57,27 +59,27 @@ module.exports = app => {
   // Lets keep the prometheus and this app alive
   // Not this will use up all 540 hours in one month within about 14 days
   // and will not allow for troubleshooting unless you upgrade your account
-  var http = require("http");
+  var http = require('http')
   if (process.env.APP_URL) {
     app.log('setting up timer for this app -> ' + process.env.APP_URL)
-    setInterval(function() {
+    setInterval(() => {
       app.log('requesting ping on -> ' + process.env.APP_URL + '/probot/ping')
-      http.get(process.env.APP_URL + '/probot/ping');
-    }, 300000); // every 5 minutes (300000)
+      http.get(process.env.APP_URL + '/probot/ping')
+    }, 300000) // every 5 minutes (300000)
   }
 
   if (process.env.PROM_URL) {
     app.log('setting up timer for prometheus -> ' + process.env.PROM_URL)
-    setInterval(function() {
+    setInterval(() => {
       app.log('requesting GET on -> ' + process.env.PROM_URL)
-      http.get(process.env.PROM_URL);
-    }, 300000); // every 5 minutes (300000)
+      http.get(process.env.PROM_URL)
+    }, 300000) // every 5 minutes (300000)
   }
 
   // Lets test incrementing the build count
   router.get('/test_count', (req, res) => {
     app.log('GET -> /test_count.')
-    histogram.observe({
+    summary.observe({
       action: 'completed', // .action
       name: 'Travis CI - Pull Request',
       check_suite_head_branch: 'mybranch',
@@ -153,7 +155,7 @@ module.exports = app => {
     app.log('observation.repository_name -> ' + observation.repository_name)
     app.log('duration -> ' + duration)
 
-    histogram.observe(observation, duration)
+    summary.observe(observation, duration)
     app.log('check_run.created -> done')
   })
   // For more information on building apps:
