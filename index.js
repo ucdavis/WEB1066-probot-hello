@@ -61,8 +61,8 @@ module.exports = app => {
   if (process.env.APP_URL) {
     app.log('setting up timer for this app -> ' + process.env.APP_URL)
     setInterval(function() {
-      app.log('requesting ping on -> ' + process.env.APP_URL + '/ping')
-      http.get(process.env.APP_URL + '/ping');
+      app.log('requesting ping on -> ' + process.env.APP_URL + '/probot/ping')
+      http.get(process.env.APP_URL + '/probot/ping');
     }, 300000); // every 5 minutes (300000)
   }
 
