@@ -25,11 +25,9 @@ module.exports = app => {
   })
 
   // register metrics on startup
-  const summary = new client.Summary({
-    name: 'builds',
+  const prom = new client.Histogram({
+    name: 'builds_duration_ms',
     help: 'The number of builds that have executed',
-    maxAgeSeconds: 600, // keep only 10 minutes of observations
-    ageBuckets: 100, // just 100 builds per 10 minutes max
     labelNames: [
       'action',  // action
       'name',
@@ -79,7 +77,8 @@ module.exports = app => {
   // Lets test incrementing the build count
   router.get('/test_count', (req, res) => {
     app.log('GET -> /test_count.')
-    summary.observe({
+    prom.reset()
+    prom.observe({
       action: 'completed', // .action
       name: 'Travis CI - Pull Request',
       check_suite_head_branch: 'mybranch',
@@ -155,7 +154,7 @@ module.exports = app => {
     app.log('observation.repository_name -> ' + observation.repository_name)
     app.log('duration -> ' + duration)
 
-    summary.observe(observation, duration)
+    prom.observe(observation, duration)
     app.log('check_run.created -> done')
   })
   // For more information on building apps:
