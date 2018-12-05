@@ -28,8 +28,8 @@ module.exports = app => {
   const summary = new client.Summary({
     name: 'builds',
     help: 'The number of builds that have executed',
-    maxAgeSeconds: 3600, // don't observe a build longer than 1 hr
-    ageBuckets: 2, // just 2 observations
+    maxAgeSeconds: 600, // keep only 10 minutes of observations
+    ageBuckets: 100, // just 100 builds per 10 minutes max
     labelNames: [
       'action',  // action
       'name',
