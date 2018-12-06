@@ -25,9 +25,11 @@ module.exports = app => {
   })
 
   // register metrics on startup
-  const prom = new client.Histogram({
+  const prom = new client.Summary({
     name: 'builds_duration_ms',
     help: 'The number of builds that have executed',
+    maxAgeSeconds: 60, // 1 minute sliding window
+    ageBuckets: 100,   // for 100 builds
     labelNames: [
       'action',  // action
       'name',
