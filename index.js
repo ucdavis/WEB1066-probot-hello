@@ -31,16 +31,8 @@ module.exports = app => {
     labelNames: [
       'action',  // action
       'name',
-      'check_suite_head_branch',
-      'check_run_head_sha',
-      'check_run_id',
-                 // 'check_suite_external_id', // the travis build id
-                 // 'check_suite_details_url',
       'check_run_status',
       'check_run_conclusion',
-      'check_run_started_at',
-      'check_run_completed_at',
-      'sender_login',
       'repository_full_name',
       'repository_name'
     ],
@@ -81,16 +73,8 @@ module.exports = app => {
     prom.observe({
       action: 'completed', // .action
       name: 'Travis CI - Pull Request',
-      check_suite_head_branch: 'mybranch',
-      check_run_head_sha: 'xxxxxx', // check_run.name
-      check_run_id: 34719534,
-        // check_run_external_id:  92495945,
-        // check_run_details_url:  'https://api.github.com/repos/LeoPoppy/WEB1066-probot-hello/check-runs/34719534',
       check_run_status: 'completed',
       check_run_conclusion: 'success',
-      check_run_started_at: '2018-11-26T04:54:18Z',
-      check_run_completed_at: '2018-11-26T04:56:08Z',
-      sender_login: 'wenlock', // sender.login
       repository_full_name: 'LeoPoppy/WEB1066-probot-hello', // repository.full_name
       repository_name: 'WEB1066-probot-hello'
     },
@@ -126,30 +110,16 @@ module.exports = app => {
     const observation = {
       action: context.payload.action, // .action
       name: context.payload.check_run.name,
-      check_suite_head_branch: context.payload.check_run.check_suite.head_branch,
-      check_run_head_sha: context.payload.check_run.head_sha, // check_run.name
-      check_run_id: context.payload.check_run.id,
-        // check_run_external_id:  92495945,
-        // check_run_details_url:  'https://api.github.com/repos/LeoPoppy/WEB1066-probot-hello/check-runs/34719534',
       check_run_status: context.payload.check_run.status,
       check_run_conclusion: context.payload.check_run.conclusion,
-      check_run_started_at: context.payload.check_run.started_at,
-      check_run_completed_at: context.payload.check_run.completed_at,
-      sender_login: context.payload.sender.login, // sender.login
       repository_full_name: context.payload.repository.full_name, // repository.full_name
       repository_name: context.payload.repository.name
     }
-    const duration = new Date(observation.check_run_completed_at) - new Date(observation.check_run_started_at)
+    const duration = new Date(context.payload.check_run.completed_at) - new Date(context.payload.check_run.started_at)
     app.log('observation.action -> ' + observation.action)
     app.log('observation.name -> ' + observation.name)
-    app.log('observation.check_suite_head_branch -> ' + observation.check_suite_head_branch)
-    app.log('observation.check_run_head_sha -> ' + observation.check_run_head_sha)
-    app.log('observation.check_run_id -> ' + observation.check_run_id)
     app.log('observation.check_run_status -> ' + observation.check_run_status)
     app.log('observation.check_run_conclusion -> ' + observation.check_run_conclusion)
-    app.log('observation.check_run_started_at -> ' + observation.check_run_started_at)
-    app.log('observation.check_run_completed_at -> ' + observation.check_run_completed_at)
-    app.log('observation.sender_login -> ' + observation.sender_login)
     app.log('observation.repository_full_name -> ' + observation.repository_full_name)
     app.log('observation.repository_name -> ' + observation.repository_name)
     app.log('duration -> ' + duration)
