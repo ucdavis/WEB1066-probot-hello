@@ -3,6 +3,8 @@ const { Application } = require('probot')
 const myProbotApp = require('..')
 
 const issuesOpenedPayload = require('./fixtures/issues.opened.json')
+const checkRunRequestedPayload = require('./fixtures/check_run.created.json')
+const checkRunCompletedPayload = require('./fixtures/check_run.completed.json')
 
 test('that we can run tests', () => {
   // your real tests go here
@@ -29,12 +31,28 @@ describe('My Probot app', () => {
   test('creates a comment when an issue is opened', async () => {
     // Simulates delivery of an issues.opened webhook
     await app.receive({
-      event: 'issues.opened',
+      name: 'issues.opened',
       payload: issuesOpenedPayload
     })
 
     // This test passes if the code in your index.js file calls `context.github.issues.createComment`
     expect(github.issues.createComment).toHaveBeenCalled()
+  })
+
+  test('process check_run requested event', async () => {
+    // Simulates delivery of a check_suite.requested webhook
+    await app.receive({
+      name: 'check_run.created',
+      payload: checkRunRequestedPayload
+    })
+  })
+
+  test('process check_run completed event', async () => {
+    // Simulates delivery of an issues.opened webhook
+    await app.receive({
+      name: 'check_run.completed',
+      payload: checkRunCompletedPayload
+    })
   })
 })
 
