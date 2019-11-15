@@ -2,8 +2,6 @@
 
 > A GitHub App built with [Probot](https://github.com/probot/probot) that A Probot app
 
-![Build Status](https://travis-ci.org/cen24/WEB1066-probot-hello.svg?branch=master)
-
 ## Setup
 
 ```sh
