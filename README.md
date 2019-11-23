@@ -20,4 +20,4 @@ For more, check out the [Contributing Guide](CONTRIBUTING.md).
 
 ## License
 
-[ISC](LICENSE) © 2018 Edward Raigosa <wenlock@github.com>
+[ISC](LICENSE) © 2018 Edward Raigosa <wenlock@github.com> this it
