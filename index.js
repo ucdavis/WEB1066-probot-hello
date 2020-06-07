@@ -5,7 +5,7 @@
 module.exports = app => {
   // Your code here
   app.log('Yay, the app was loaded!')
-
+//issues opened
   app.on('issues.opened', async context => {
     const issueComment = context.issue({ body: 'Thanks for opening this issue! It worked.' })
     return context.github.issues.createComment(issueComment)
@@ -17,3 +17,4 @@ module.exports = app => {
   // To get your app running against GitHub, see:
   // https://probot.github.io/docs/development/
 }
+// here is the finish 

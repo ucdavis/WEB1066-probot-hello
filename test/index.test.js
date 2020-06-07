@@ -1,14 +1,14 @@
 const { Application } = require('probot')
 // Requiring our app implementation
 const myProbotApp = require('..')
-
+//This is a constant
 const issuesOpenedPayload = require('./fixtures/issues.opened.json')
 
 test('that we can run tests', () => {
   // your real tests go here
   expect(1 + 2 + 3).toBe(6)
-})
-
+}) 
+//The describe instruction
 describe('My Probot app', () => {
   let app, github
 
@@ -29,7 +29,7 @@ describe('My Probot app', () => {
   test('creates a comment when an issue is opened', async () => {
     // Simulates delivery of an issues.opened webhook
     await app.receive({
-      event: 'issues.opened',
+      name: 'issues.opened',
       payload: issuesOpenedPayload
     })
 
@@ -37,6 +37,6 @@ describe('My Probot app', () => {
     expect(github.issues.createComment).toHaveBeenCalled()
   })
 })
-
+// finish
 // For more information about testing with Jest see:
 // https://facebook.github.io/jest/
