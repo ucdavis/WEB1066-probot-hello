@@ -37,6 +37,6 @@ describe('My Probot app', () => {
     expect(github.issues.createComment).toHaveBeenCalled()
   })
 })
-
+// finish
 // For more information about testing with Jest see:
 // https://facebook.github.io/jest/
