@@ -3,7 +3,7 @@ services:
 -docker
 
 before_install:
--run docker pull node:8-onbuild
+-docker pull node:8-onbuild
 
 install:
 -docker build -t probot-hello .
