@@ -15,4 +15,4 @@ deploy:
 provider: heroku
 app: probot-sabrimarz
 on: 
-branch: heroku_production 
+all_branches: true
