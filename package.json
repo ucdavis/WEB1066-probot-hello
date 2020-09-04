@@ -17,13 +17,10 @@
     "start": "probot run ./index.js",
     "lint": "standard --fix",
     "test": "jest && standard",
-    "coverage": "jest --coverage",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
-    "dev": "^0.1.3",
-    "probot": "^7.0.0",
-    "run": "^1.4.0"
+    "probot": "^7.0.0"
   },
   "devDependencies": {
     "jsdom": "11.11.0",
