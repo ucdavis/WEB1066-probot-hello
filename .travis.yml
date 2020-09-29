@@ -1,4 +1,4 @@
-sudo: required
+sudo: require
 services:
 - docker
 before_install:
@@ -12,5 +12,5 @@ deploy:
   provider: heroku
   api_key:
     secure: urjWviqR5/5GkUSRxMKeSN1t+hx4XCn/JAbjFS5jh6D9VmPgFFDGeoycGq7q+jSO3c5VzjsBnblm74Qr8BbUgmcIQ9TERmGn8+UnC4CAlp9WeLCYS7Q+b6X43GBIayIMbV2zqKc7X4f863jzGfA5TL870fw230dx8Js0eoEgL9lEQMTW7vZCTfqfuRnNeQaEWnNLD7o4e42mfbP0IgTiU50SpB1wCcfqSyMqVO+LJopUEVEm6T6KsBdrhlXFRLpOXTTYGX7TiZ/u1E29x8DOvAanzSaZJBvsOH4+c3Wo+JRYDZIpKLR9F+17liDcSjNW4CLK75Y0yDqyW79JqRdWFDiNVxgi0XbVaQeSIjLYydrf0lXqsC0a9nqz6RoRgPsxe6wXgE3jD2i4BJFUtZvZogoMGvTY8w9DuyN0e3dK/KTCk+l5aNPADxxEUHErLEZPVfm+5+Z0buH3rwSS5olu96iy2+pdMErZmY7u8PRLjqBmrduvoD2kRpI1CLonVZ/6hQPYvNQM1FSrC4/A1qDY6npY1CxIYfnLMtTW3oiTw8R5j/Y1gQrpT+qHbv1bJQgXtF3gBTlo/Kw935+NwFsn0mRk4cnUPSKrIJKx5/jzoZEaQmlr3Q842gzdssxiu6ft+hTrmlTVaxymfuqr9m1PksFOkXUXjSTwm/spBq5r7do=
-  on: heroku_produciton
+  on: heroku_production
   app: probot-ushasrin
