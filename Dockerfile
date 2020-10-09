@@ -14,7 +14,7 @@ ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 ENV PATH=$PATH:/home/node/.npm-global/bin
 
 # Lets install our app into /home/node
-COPY . /home/pablo/node/probot-hello
+COPY . /home/node/probot-hello
 RUN chown -R node:node /home/node/probot-hello
 
 # setup our app
