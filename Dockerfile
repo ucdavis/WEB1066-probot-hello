@@ -21,5 +21,5 @@ RUN chown -R node:node /home/node/probot-hello
 # non-root user  https://github.com/nodejs/docker-node/blob/e3ec2111af089e31321e76641697e154b3b6a6c3/docs/BestPractices.md#non-root-user
 USER node
 
-WORKDIR /home/pablo/node/probot-hello
+WORKDIR /home/node/probot-hello
 RUN npm install
