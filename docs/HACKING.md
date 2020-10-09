@@ -1,8 +1,8 @@
 # Build locally
-`docker build -t probot-hello .`
+`sudo docker build -t probot-hello .`
 
 # Test the project
-`docker run -it --rm probot-hello npm run test`
+`sudo docker run -it --rm probot-hello npm run test`
 
 # Test out running locally
 
@@ -25,7 +25,7 @@ Changes to your source code get reflected in the container and node restarts
 our app with the latest changes.
 
 ```
-docker run  -it --rm \
+sudo docker run  -it --rm \
             -e APP_ID=abc \
             -e PRIVATE_KEY=none \
             -w /home/node/probot-hello-dev \

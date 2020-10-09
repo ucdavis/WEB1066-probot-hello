@@ -11,15 +11,15 @@ ENV PRIVATE_KEY="someprivatestring"
 
 # see https://github.com/nodejs/docker-node/blob/e3ec2111af089e31321e76641697e154b3b6a6c3/docs/BestPractices.md#global-npm-dependencies
 ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
-ENV PATH=$PATH:/home/node/.npm-global/bin
+ENV PATH=$PATH:/home/pablo/node/.npm-global/bin
 
 # Lets install our app into /home/node
-COPY . /home/node/probot-hello
-RUN chown -R node:node /home/node/probot-hello
+COPY . /home/pablo/node/probot-hello
+RUN chown -R node:node /home/pablo/node/probot-hello
 
 # setup our app
 # non-root user  https://github.com/nodejs/docker-node/blob/e3ec2111af089e31321e76641697e154b3b6a6c3/docs/BestPractices.md#non-root-user
 USER node
 
-WORKDIR /home/node/probot-hello
+WORKDIR /home/pablo/node/probot-hello
 RUN npm install
