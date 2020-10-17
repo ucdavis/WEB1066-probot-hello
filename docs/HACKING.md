@@ -1,7 +1,7 @@
 # Build locally
 `docker build -t probot-hello .`
 
-# Test the project
+cd# Test the project
 `docker run -it --rm probot-hello npm run test`
 
 # Test out running locally
@@ -28,8 +28,8 @@ our app with the latest changes.
 docker run  -it --rm \
             -e APP_ID=abc \
             -e PRIVATE_KEY=none \
-            -w /home/node/probot-hello-dev \
-            -v "$(pwd)":/home/node/probot-hello-dev \
+            -w /home/node/probot-hello \
+            -v "$(pwd)":/home/node/probot-hello \
             -p 3000:3000 probot-hello \
             bash -c 'npm install && npm run dev'
 ```

@@ -15,7 +15,9 @@ ENV PATH=$PATH:/home/node/.npm-global/bin
 
 # Lets install our app into /home/node
 COPY . /home/node/probot-hello
-RUN chown -R node:node /home/node/probot-hello
+RUN ls -al /home/node
+RUN chown -R node:node /home/node
+RUN ls -al /home/node
 
 # setup our app
 # non-root user  https://github.com/nodejs/docker-node/blob/e3ec2111af089e31321e76641697e154b3b6a6c3/docs/BestPractices.md#non-root-user
@@ -23,3 +25,5 @@ USER node
 
 WORKDIR /home/node/probot-hello
 RUN npm install
+RUN chown -R node:node /home/node
+RUN ls -al /home/node
