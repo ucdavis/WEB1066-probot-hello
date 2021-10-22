@@ -14,3 +14,5 @@ script:
 
 deploy:
   provider: heroku
+  on: heroku_production
+  app: probot-noor54 
