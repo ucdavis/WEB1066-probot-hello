@@ -16,3 +16,7 @@ deploy:
   provider: heroku
   on: heroku_production
   app: probot-noor54 
+=======
+language : node_js
+node_js:
+   - "8.3"
