@@ -1,5 +1,6 @@
 # https://hub.docker.com/_/node/
-FROM node:8-onbuild
+ARG NODE_IMAGE=14-buster
+FROM $NODE_IMAGE
 
 # use debug to troubleshoot
 ENV LOG_LEVEL=error

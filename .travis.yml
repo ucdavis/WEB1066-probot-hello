@@ -4,19 +4,71 @@ services:
   - docker
 
 env:
-  - NPM_TARGET=test
-  - NPM_TARGET=lint
-  - NPM_TARGET=coverage
-
-before_install:
-  - docker pull node:14
-
-install:
-  - docker build -t probot-hello .
+  - NODE_VERSION=14-buster
+  - NODE_VERSION=16-alpine
 
 script:
-  - docker run --rm probot-hello npm $NPM_TARGET
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker build -t node:$NODE_VERSION --build-arg NODE_IMAGE="node:${NODE_VERSION}" .
+  - docker images
+  - docker tag node:$NODE_VERSION $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
+  - docker push $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD)
 
+stages:
+  - test
+  - npm-targets
+
+jobs:
+  include:
+    - stage: npm-targets
+      name: "Test 14-buster"
+      install: skip
+      script:
+        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
+        env:
+          - NODE_VERSION=14-buster
+          - NPM_TARGET=test
+    - stage: npm-targets
+      name: "Test 14-buster"
+      install: skip
+      script:
+        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
+        env:
+          - NODE_VERSION=14-buster
+          - NPM_TARGET=lint
+    - stage: npm-targets
+      name: "Test 14-buster"
+      install: skip
+      script:
+        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
+        env:
+          - NODE_VERSION=14-buster
+          - NPM_TARGET=coverage
+    - stage: npm-targets
+      name: "Test 16-alpine"
+      install: skip
+      script:
+        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
+        env:
+          - NODE_VERSION=16-alpine
+          - NPM_TARGET=test
+    - stage: npm-targets
+      name: "Test 16-alpine"
+      install: skip
+      script:
+        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
+        env:
+          - NODE_VERSION=16-alpine
+          - NPM_TARGET=lint
+    - stage: npm-targets
+      name: "Test 16-alpine"
+      install: skip
+      script:
+        - docker run --rm $DOCKER_USERNAME/probot-hello:$NODE_VERSION-$(git rev-parse HEAD) npm run $NPM_TARGET
+        if: branch = master
+        env:
+          - NODE_VERSION=16-alpine
+          - NPM_TARGET=coverage
 after_success:
   - set -x -v;
     set -e;
@@ -26,3 +78,4 @@ after_success:
       echo "skipping docker tag";
     fi;
     docker images;
+    set +x +v;
